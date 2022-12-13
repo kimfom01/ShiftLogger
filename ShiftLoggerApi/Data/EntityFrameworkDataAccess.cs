@@ -17,7 +17,7 @@ public class EntityFrameworkDataAccess : IDataAccess
         throw new NotImplementedException();
     }
 
-    public Shift GetShift()
+    public Shift GetShift(int id)
     {
         throw new NotImplementedException();
     }
