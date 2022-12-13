@@ -33,11 +33,14 @@ public class EntityFrameworkDataAccess : IDataAccess
     {
         var oldShift = await GetShiftByIdAsync(id);
         oldShift.EndTime = shift.EndTime;
+        oldShift.Duration = shift.Duration;
         await _shiftContext.SaveChangesAsync();
     }
 
     public async Task DeleteShiftAsync(int id)
     {
-        throw new NotImplementedException();
+        var shift = await GetShiftByIdAsync(id);
+        _shiftContext.Remove(shift);
+        await _shiftContext.SaveChangesAsync();
     }
 }
