@@ -10,6 +10,7 @@ public class Shift
     public string? Name { get; set; }
     [Required]
     public DateTime StartTime { get; set; }
-    public DateTime? EndTime { get; set; }
-    public TimeSpan? Duration { get; set; }
+
+    public DateTime? EndTime { get; set; } = null;
+    public string? Duration { get; set; } = null;
 }
