@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ShiftLoggerApi.DataContext;
 using ShiftLoggerApi.Models;
 
@@ -12,27 +13,30 @@ public class EntityFrameworkDataAccess : IDataAccess
         _shiftContext = shiftContext;
     }
     
-    public List<Shift> GetShifts()
+    public async Task<List<Shift>> GetShiftsAsync()
     {
-        throw new NotImplementedException();
+        return await _shiftContext.Shifts.ToListAsync();
     }
 
-    public Shift GetShift(int id)
+    public async Task<Shift> GetShiftByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _shiftContext.Shifts.FirstAsync(x => x.Id == id);
     }
 
-    public void AddShift(Shift shift)
+    public async Task AddShiftAsync(Shift shift)
     {
-        throw new NotImplementedException();
+        await _shiftContext.AddAsync(shift);
+        await _shiftContext.SaveChangesAsync();
     }
 
-    public void UpdateShift(int id, Shift shift)
+    public async Task UpdateShiftAsync(int id, Shift shift)
     {
-        throw new NotImplementedException();
+        var oldShift = await GetShiftByIdAsync(id);
+        oldShift.EndTime = shift.EndTime;
+        await _shiftContext.SaveChangesAsync();
     }
 
-    public void DeleteShift(int id)
+    public async Task DeleteShiftAsync(int id)
     {
         throw new NotImplementedException();
     }
