@@ -31,7 +31,7 @@ namespace ShiftLoggerApi.Controllers
         [HttpGet("{id}", Name = "Get")]
         public Shift GetShift(int id)
         {
-            return _dataAccess.GetShift(id);
+            return _dataAccess.GetShiftById(id);
         }
 
         // POST: api/Shift
