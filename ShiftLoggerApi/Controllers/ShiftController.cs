@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShiftLoggerApi.Data;
 using ShiftLoggerApi.Models;
@@ -19,40 +14,40 @@ namespace ShiftLoggerApi.Controllers
         {
             _dataAccess = dataAccess;
         }
-        
+
         // GET: api/Shift
         [HttpGet]
-        public IEnumerable<Shift> GetShifts()
+        public async Task<IEnumerable<Shift>> GetShiftsAsync()
         {
-            return _dataAccess.GetShifts();
+            return await _dataAccess.GetShiftsAsync();
         }
 
         // GET: api/Shift/5
         [HttpGet("{id}", Name = "Get")]
-        public Shift GetShift(int id)
+        public async Task<Shift> GetShiftByIdAsync(int id)
         {
-            return _dataAccess.GetShiftById(id);
+            return await _dataAccess.GetShiftByIdAsync(id);
         }
 
         // POST: api/Shift
         [HttpPost]
-        public void Post([FromBody] Shift shift)
+        public async Task PostAsync([FromBody] Shift shift)
         {
-            _dataAccess.AddShift(shift);
+            await _dataAccess.AddShiftAsync(shift);
         }
 
         // PUT: api/Shift/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Shift shift)
+        public async Task PutAsync(int id, [FromBody] Shift shift)
         {
-            _dataAccess.UpdateShift(id, shift);
+            await _dataAccess.UpdateShiftAsync(id, shift);
         }
 
         // DELETE: api/Shift/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _dataAccess.DeleteShift(id);
+            await _dataAccess.DeleteShiftAsync(id);
         }
     }
 }
