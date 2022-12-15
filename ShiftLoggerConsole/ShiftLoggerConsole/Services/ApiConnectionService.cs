@@ -20,6 +20,7 @@ public class ApiConnectionService : IApiConnectionService
     public async Task<List<Shift>> GetAllShifts()
     {
         List<Shift> shiftList = new();
+        
         try
         {
             using (var response = await _httpClient.GetAsync(""))
@@ -37,5 +38,43 @@ public class ApiConnectionService : IApiConnectionService
         }
 
         return shiftList;
+    }
+
+    public async Task<Shift> GetShiftById(int id)
+    {
+        Shift shift = new();
+
+        try
+        {
+            using (var response = await _httpClient.GetAsync($"/{id}"))
+            {
+                response.EnsureSuccessStatusCode();
+                var stream = await response.Content.ReadAsStreamAsync();
+                shift = await JsonSerializer.DeserializeAsync<Shift>(stream);
+
+                return shift;
+            }
+        }
+        catch (HttpRequestException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
+        return shift;
+    }
+
+    public async Task AddShift(Shift shift)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateShift(int id, Shift shift)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteShift(int id)
+    {
+        throw new NotImplementedException();
     }
 }
