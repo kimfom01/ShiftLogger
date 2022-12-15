@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ShiftLoggerConsole;
 using ShiftLoggerConsole.Services;
 using ShiftLoggerConsole.UI;
+using ShiftLoggerConsole.UserInput;
+using ShiftLoggerConsole.Validation;
 
 IConfiguration configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetParent(AppContext.BaseDirectory)!.FullName)
@@ -16,6 +18,8 @@ services.AddSingleton<IStartup, Startup>();
 services.AddSingleton<HttpClient>();
 services.AddTransient<IApiConnectionService, ApiConnectionService>();
 services.AddTransient<IUserInteraction, UserInteraction>();
+services.AddTransient<IInput, Input>();
+services.AddTransient<IInputValidator, InputValidator>();
 
 var serviceProvider = services.BuildServiceProvider();
 var startup = serviceProvider.GetService<IStartup>();
