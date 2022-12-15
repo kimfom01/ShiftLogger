@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using ShiftLoggerConsole.Models;
@@ -46,7 +47,7 @@ public class ApiConnectionService : IApiConnectionService
 
         try
         {
-            using (var response = await _httpClient.GetAsync($"/{id}"))
+            using (var response = await _httpClient.GetAsync($"{id}"))
             {
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
@@ -65,16 +66,22 @@ public class ApiConnectionService : IApiConnectionService
 
     public async Task AddShift(Shift shift)
     {
-        throw new NotImplementedException();
+        var json = JsonSerializer.Serialize(shift);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        await _httpClient.PostAsync("", content);
     }
 
     public async Task UpdateShift(int id, Shift shift)
     {
-        throw new NotImplementedException();
+        var json = JsonSerializer.Serialize(shift);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        await _httpClient.PutAsync($"{id}", content);
     }
 
     public async Task DeleteShift(int id)
     {
-        throw new NotImplementedException();
+        await _httpClient.DeleteAsync($"{id}");
     }
 }
