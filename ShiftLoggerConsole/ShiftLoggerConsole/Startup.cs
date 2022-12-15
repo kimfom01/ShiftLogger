@@ -12,6 +12,6 @@ public class Startup : IStartup
     }
     public async Task Run()
     {
-        await _userInteraction.DisplayAllShifts();
+        await _userInteraction.DeleteShift();
     }
 }
