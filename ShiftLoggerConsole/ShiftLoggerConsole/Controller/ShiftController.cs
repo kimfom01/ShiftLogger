@@ -1,13 +1,14 @@
 using ShiftLoggerConsole.Models;
 using ShiftLoggerConsole.Services;
+using ShiftLoggerConsole.UI;
 
-namespace ShiftLoggerConsole.UI;
+namespace ShiftLoggerConsole.Controller;
 
-public class UserInteraction : IUserInteraction
+public class ShiftController : IShiftController
 {
     private readonly IApiConnectionService _apiConnectionService;
 
-    public UserInteraction(IApiConnectionService apiConnectionService)
+    public ShiftController(IApiConnectionService apiConnectionService)
     {
         _apiConnectionService = apiConnectionService;
     }

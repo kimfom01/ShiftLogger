@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShiftLoggerConsole;
+using ShiftLoggerConsole.Controller;
 using ShiftLoggerConsole.Services;
 using ShiftLoggerConsole.UI;
 using ShiftLoggerConsole.UserInput;
@@ -17,7 +18,7 @@ services.AddSingleton(configuration);
 services.AddSingleton<IStartup, Startup>();
 services.AddSingleton<HttpClient>();
 services.AddTransient<IApiConnectionService, ApiConnectionService>();
-services.AddTransient<IUserInteraction, UserInteraction>();
+services.AddTransient<IShiftController, ShiftController>();
 services.AddTransient<IInput, Input>();
 services.AddTransient<IInputValidator, InputValidator>();
 

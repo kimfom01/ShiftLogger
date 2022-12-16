@@ -4,14 +4,14 @@ namespace ShiftLoggerConsole;
 
 public class Startup : IStartup
 {
-    private readonly IUserInteraction _userInteraction;
+    private readonly IShiftController _shiftController;
 
-    public Startup(IUserInteraction userInteraction)
+    public Startup(IShiftController shiftController)
     {
-        _userInteraction = userInteraction;
+        _shiftController = shiftController;
     }
     public async Task Run()
     {
-        await _userInteraction.DeleteShift();
+        await _shiftController.DeleteShift();
     }
 }

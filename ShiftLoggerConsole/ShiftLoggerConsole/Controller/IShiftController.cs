@@ -1,6 +1,6 @@
 namespace ShiftLoggerConsole.UI;
 
-public interface IUserInteraction
+public interface IShiftController
 {
     public Task DisplayAllShifts();
     public Task DisplaySingleShift();
