@@ -10,6 +10,22 @@ public class Input : IInput
     {
         _validator = validator;
     }
+    
+    public int GetId()
+    {
+        int id = -1;
+        Console.Write("Enter id: ");
+        var temp = Console.ReadLine()!.Trim();
+        while (!_validator.IsValidId(temp, ref id))
+        {
+            Console.WriteLine("Error!");
+            Console.Write("Enter id: ");
+            temp = Console.ReadLine()!.Trim();
+        }
+
+        return id;
+    }
+    
     public string GetName()
     {
         Console.Write("Enter name: ");
@@ -24,18 +40,8 @@ public class Input : IInput
         return name;
     }
 
-    public int GetId()
+    public string GetInput()
     {
-        int id = -1;
-        Console.Write("Enter id: ");
-        var temp = Console.ReadLine()!.Trim();
-        while (!_validator.IsValidId(temp, ref id))
-        {
-            Console.WriteLine("Error!");
-            Console.Write("Enter id: ");
-            temp = Console.ReadLine()!.Trim();
-        }
-
-        return id;
+        return Console.ReadLine().Trim();
     }
 }
