@@ -1,7 +1,6 @@
 using ShiftLoggerConsole.Models;
 using ShiftLoggerConsole.Services;
 using ShiftLoggerConsole.TableVisualization;
-using ShiftLoggerConsole.UI;
 using ShiftLoggerConsole.UserInput;
 
 namespace ShiftLoggerConsole.Controller;
@@ -69,11 +68,16 @@ public class ShiftController : IShiftController
     {
         Console.WriteLine("You need to enter an id to get the shift");
         var id = _input.GetId();
-        var shift = await _apiConnectionService.GetShiftById(id);
+        Shift? shift = await _apiConnectionService.GetShiftById(id);
 
+        if (shift.Name == null)
+        {
+            Continue();
+            return;
+        }
+        
         var shifts = new List<Shift> { shift };
         _builder.DisplayTable(shifts);
-
         Continue();
     }
 
@@ -95,10 +99,13 @@ public class ShiftController : IShiftController
         Console.WriteLine("To end a shift, we need an id");
         var id = _input.GetId();
         var shift = await _apiConnectionService.GetShiftById(id);
-        shift.EndTime = DateTime.Now;
-        shift.Duration = GetDuration(shift.StartTime, DateTime.Now);
-        await _apiConnectionService.UpdateShift(id, shift);
-        
+        if (shift != null)
+        {
+            shift.EndTime = DateTime.Now;
+            shift.Duration = GetDuration(shift.StartTime, DateTime.Now);
+            await _apiConnectionService.UpdateShift(id, shift);
+        }
+
         Continue();
     }
 
@@ -117,8 +124,8 @@ public class ShiftController : IShiftController
     private string GetDuration(DateTime startTime, DateTime endTime)
     {
         var timeSpan = endTime - startTime;
-        var duration = timeSpan.Hours;
-        return duration.ToString();
+        var duration = timeSpan.TotalHours;
+        return duration + " hrs";
     }
     
     private void Continue()

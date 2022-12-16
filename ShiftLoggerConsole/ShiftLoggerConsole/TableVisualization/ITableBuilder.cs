@@ -4,5 +4,5 @@ namespace ShiftLoggerConsole.TableVisualization;
 
 public interface ITableBuilder
 {
-    public void DisplayTable(List<Shift> shifts);
+    public void DisplayTable(List<Shift>? shifts);
 }

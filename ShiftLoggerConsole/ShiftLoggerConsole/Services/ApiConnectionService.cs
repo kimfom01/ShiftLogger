@@ -18,9 +18,9 @@ public class ApiConnectionService : IApiConnectionService
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    public async Task<List<Shift>> GetAllShifts()
+    public async Task<List<Shift>?> GetAllShifts()
     {
-        List<Shift> shiftList = new();
+        List<Shift>? shiftList = new();
         
         try
         {
@@ -41,9 +41,9 @@ public class ApiConnectionService : IApiConnectionService
         return shiftList;
     }
 
-    public async Task<Shift> GetShiftById(int id)
+    public async Task<Shift?> GetShiftById(int id)
     {
-        Shift shift = new();
+        Shift? shift = new();
 
         try
         {
@@ -72,7 +72,7 @@ public class ApiConnectionService : IApiConnectionService
         await _httpClient.PostAsync("", content);
     }
 
-    public async Task UpdateShift(int id, Shift shift)
+    public async Task UpdateShift(int id, Shift? shift)
     {
         var json = JsonSerializer.Serialize(shift);
         var content = new StringContent(json, Encoding.UTF8, "application/json");

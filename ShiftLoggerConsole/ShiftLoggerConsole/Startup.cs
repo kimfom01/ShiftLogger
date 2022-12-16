@@ -1,4 +1,4 @@
-using ShiftLoggerConsole.UI;
+using ShiftLoggerConsole.Controller;
 
 namespace ShiftLoggerConsole;
 

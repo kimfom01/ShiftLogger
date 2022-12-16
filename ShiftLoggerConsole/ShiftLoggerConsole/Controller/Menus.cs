@@ -1,4 +1,4 @@
-namespace ShiftLoggerConsole.UI;
+namespace ShiftLoggerConsole.Controller;
 
 public class Menus
 {

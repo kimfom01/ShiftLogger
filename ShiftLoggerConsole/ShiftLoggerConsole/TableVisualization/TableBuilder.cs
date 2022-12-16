@@ -5,7 +5,7 @@ namespace ShiftLoggerConsole.TableVisualization;
 
 public class TableBuilder : ITableBuilder
 {
-    public void DisplayTable(List<Shift> shifts)
+    public void DisplayTable(List<Shift>? shifts)
     {
         ConsoleTableBuilder
             .From(shifts)

@@ -29,12 +29,12 @@ public class Input : IInput
     public string GetName()
     {
         Console.Write("Enter name: ");
-        var name = Console.ReadLine().Trim();
+        var name = Console.ReadLine()!.Trim();
         while (!_validator.IsValidName(name))
         {
             Console.WriteLine("Error!");
             Console.Write("Enter name: ");
-            name = Console.ReadLine().Trim();
+            name = Console.ReadLine()!.Trim();
         }
 
         return name;
@@ -42,6 +42,6 @@ public class Input : IInput
 
     public string GetInput()
     {
-        return Console.ReadLine().Trim();
+        return Console.ReadLine()!.Trim();
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ShiftLoggerConsole;
 using ShiftLoggerConsole.Controller;
 using ShiftLoggerConsole.Services;
-using ShiftLoggerConsole.UI;
+using ShiftLoggerConsole.TableVisualization;
 using ShiftLoggerConsole.UserInput;
 using ShiftLoggerConsole.Validation;
 
@@ -21,6 +21,8 @@ services.AddTransient<IApiConnectionService, ApiConnectionService>();
 services.AddTransient<IShiftController, ShiftController>();
 services.AddTransient<IInput, Input>();
 services.AddTransient<IInputValidator, InputValidator>();
+services.AddSingleton<Menus>();
+services.AddTransient<ITableBuilder, TableBuilder>();
 
 var serviceProvider = services.BuildServiceProvider();
 var startup = serviceProvider.GetService<IStartup>();
