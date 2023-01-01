@@ -33,7 +33,7 @@ public class ShiftController : IShiftController
                     break;
                 case "v":
                     await DisplaySingleShift();
-                    break;     
+                    break;
                 case "s":
                     await StartShift();
                     break;
@@ -48,8 +48,8 @@ public class ShiftController : IShiftController
                     Console.WriteLine("Invalid choice!");
                     Continue();
                     break;
-            }            
-            
+            }
+
             _menus.DisplayMainMenu();
             choice = _input.GetInput();
         }
@@ -58,9 +58,9 @@ public class ShiftController : IShiftController
     private async Task DisplayAllShifts()
     {
         var shifts = await _apiConnectionService.GetAllShifts();
-        
+
         _builder.DisplayTable(shifts);
-        
+
         Continue();
     }
 
@@ -70,12 +70,12 @@ public class ShiftController : IShiftController
         var id = _input.GetId();
         Shift? shift = await _apiConnectionService.GetShiftById(id);
 
-        if (shift.Name == null)
+        if (shift!.Name == null)
         {
             Continue();
             return;
         }
-        
+
         var shifts = new List<Shift> { shift };
         _builder.DisplayTable(shifts);
         Continue();
@@ -87,7 +87,7 @@ public class ShiftController : IShiftController
         var name = _input.GetName();
         var shift = new Shift { Name = name, StartTime = DateTime.Now };
         await _apiConnectionService.AddShift(shift);
-        
+
         Continue();
     }
 
@@ -95,7 +95,7 @@ public class ShiftController : IShiftController
     {
         var shifts = await _apiConnectionService.GetAllShifts();
         _builder.DisplayTable(shifts);
-        
+
         Console.WriteLine("To end a shift, we need an id");
         var id = _input.GetId();
         var shift = await _apiConnectionService.GetShiftById(id);
@@ -113,21 +113,21 @@ public class ShiftController : IShiftController
     {
         var shifts = await _apiConnectionService.GetAllShifts();
         _builder.DisplayTable(shifts);
-        
+
         Console.WriteLine("To delete a shift, we need an id");
         var id = _input.GetId();
         await _apiConnectionService.DeleteShift(id);
-        
+
         Continue();
     }
 
     private string GetDuration(DateTime startTime, DateTime endTime)
     {
         var timeSpan = endTime - startTime;
-        var duration = timeSpan.TotalHours;
-        return duration + " hrs";
+        var duration = timeSpan.TotalHours + (timeSpan.Days * 24);
+        return (int)duration + " hrs";
     }
-    
+
     private void Continue()
     {
         Console.WriteLine("Press any Enter to continue");
