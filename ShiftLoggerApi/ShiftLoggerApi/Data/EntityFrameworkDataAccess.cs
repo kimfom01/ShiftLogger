@@ -44,27 +44,27 @@ public class EntityFrameworkDataAccess : IDataAccess
         return shiftReadDto;
     }
 
-    public async Task UpdateShiftAsync(int id, ShiftUpdateDto shiftDto)
+    public async Task<int> UpdateShiftAsync(int id, ShiftUpdateDto shiftDto)
     {
         var oldShift = await _shiftContext.Shifts.FirstOrDefaultAsync(x => x.Id == id);
         if (oldShift is null)
         {
-            return;
+            return -1;
         }
         
         MapDto.MapFromUpdateDto(oldShift, shiftDto);
-        await _shiftContext.SaveChangesAsync();
+        return await _shiftContext.SaveChangesAsync();
     }
 
-    public async Task DeleteShiftAsync(int id)
+    public async Task<int> DeleteShiftAsync(int id)
     {
         var shift = await _shiftContext.Shifts.FirstOrDefaultAsync(x => x.Id == id);
         if (shift is null)
         {
-            return;
+            return -1;
         }
 
         _shiftContext.Remove(shift);
-        await _shiftContext.SaveChangesAsync();
+        return await _shiftContext.SaveChangesAsync();
     }
 }
