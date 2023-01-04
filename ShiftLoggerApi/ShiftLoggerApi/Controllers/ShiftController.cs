@@ -41,7 +41,7 @@ namespace ShiftLoggerApi.Controllers
         public async Task<IActionResult> PostShiftAsync([FromBody] ShiftWriteDto shiftDto)
         {
             var shiftReadDto = await _dataAccess.AddShiftAsync(shiftDto);
-            
+
             return CreatedAtRoute("Get", new { shiftReadDto.Id }, shiftReadDto);
         }
 
@@ -49,7 +49,12 @@ namespace ShiftLoggerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShiftAsync(int id, [FromBody] ShiftUpdateDto shift)
         {
-            await _dataAccess.UpdateShiftAsync(id, shift);
+            var result = await _dataAccess.UpdateShiftAsync(id, shift);
+            if (result == -1)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
 
@@ -57,7 +62,12 @@ namespace ShiftLoggerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShiftAsync(int id)
         {
-            await _dataAccess.DeleteShiftAsync(id);
+            var result = await _dataAccess.DeleteShiftAsync(id);
+            if (result == -1)
+            {
+                return NotFound();
+            }
+
             return NoContent();
         }
     }
