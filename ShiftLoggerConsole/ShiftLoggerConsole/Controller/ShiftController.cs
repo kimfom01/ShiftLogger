@@ -1,3 +1,4 @@
+using ShiftLoggerConsole.Dtos;
 using ShiftLoggerConsole.Models;
 using ShiftLoggerConsole.Services;
 using ShiftLoggerConsole.TableVisualization;
@@ -12,7 +13,11 @@ public class ShiftController : IShiftController
     private readonly IInput _input;
     private readonly ITableBuilder _builder;
 
-    public ShiftController(IApiConnectionService apiConnectionService, Menus menus, IInput input, ITableBuilder builder)
+    public ShiftController(
+        IApiConnectionService apiConnectionService, 
+        Menus menus, 
+        IInput input, 
+        ITableBuilder builder)
     {
         _apiConnectionService = apiConnectionService;
         _menus = menus;
@@ -70,7 +75,7 @@ public class ShiftController : IShiftController
         var id = _input.GetId();
         Shift? shift = await _apiConnectionService.GetShiftById(id);
 
-        if (shift!.Name == null)
+        if (shift.Name == null)
         {
             Continue();
             return;
@@ -85,7 +90,7 @@ public class ShiftController : IShiftController
     {
         Console.WriteLine("To record a shift we need a name of the staff: ");
         var name = _input.GetName();
-        var shift = new Shift { Name = name, StartTime = DateTime.Now };
+        var shift = new ShiftAddDto { Name = name, StartTime = DateTime.Now };
         await _apiConnectionService.AddShift(shift);
 
         Continue();
@@ -98,11 +103,14 @@ public class ShiftController : IShiftController
 
         Console.WriteLine("To end a shift, we need an id");
         var id = _input.GetId();
-        var shift = await _apiConnectionService.GetShiftById(id);
-        if (shift != null)
+        if (shifts != null)
         {
-            shift.EndTime = DateTime.Now;
-            shift.Duration = GetDuration(shift.StartTime, DateTime.Now);
+            var startTime = shifts.FirstOrDefault(x => x.Id == id)!.StartTime;
+            var shift = new ShiftUpdateDto
+            {
+                EndTime = DateTime.Now, 
+                Duration = GetDuration(startTime, DateTime.Now)
+            };
             await _apiConnectionService.UpdateShift(id, shift);
         }
 
